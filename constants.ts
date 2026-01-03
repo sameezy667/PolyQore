@@ -109,7 +109,7 @@ export const PROJECTS: Project[] = [
   {
     id: '6',
     title: 'FlowKey',
-    description: 'A modern, accessible frontend application built with React, TypeScript, and Tailwind CSS. Features real-time AI-powered continuous chat functionality through Google Gemini API integration with persistent conversation history and streaming responses. FlowKey provides a seamless, intuitive chat experience with state-of-the-art AI capabilities.',
+    description: 'Flowkey is an AI-powered platform that enables the generation of complete system designs from a single prompt, streamlining the system architecture process.',
     category: 'AI/ML',
     tags: ['React', 'TypeScript', 'Tailwind', 'Google Gemini', 'AI Chat', 'Accessibility'],
     thumbnailUrl: '/screenshots/Screenshot 2026-01-03 020600.png',
