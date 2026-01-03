@@ -534,7 +534,7 @@ QORE</h1>
     </div>
 
     <!-- INFO VIEW OVERLAY -->
-    <section id="info-view" class="fixed inset-0 z-[100] bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none">
+    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
         <!-- Background Grid -->
         <div class="absolute inset-0 z-0 grid grid-cols-4 pointer-events-none h-full w-full">
             <div class="dashed-r h-full"></div>
@@ -552,68 +552,61 @@ QORE</h1>
         <!-- Registration Badge -->
         <div class="absolute bottom-6 left-6 z-50 text-xs font-mono text-gray-400 border border-gray-800 px-3 py-1 uppercase">EST: 2025</div>
 
-        <!-- Content Grid (4-column) -->
-        <div class="relative z-10 grid grid-cols-1 md:grid-cols-4 h-auto md:h-full w-full overflow-y-auto md:overflow-hidden">
+        <!-- Content Grid (Strict 4-Column) -->
+        <div class="relative z-10 grid grid-cols-4 h-full w-full gap-4 p-8">
 
-            <!-- COL 1: BRAND HEADER -->
-            <div class="info-col col-span-1 p-8 pt-14 flex flex-col justify-start">
-                <h1 class="text-[10vh] md:text-[18vh] leading-[0.85] font-black uppercase tracking-tighter select-none">POLYQORE SYSTEMS</h1>
-                <div class="mt-6 text-xs font-mono text-gray-500 uppercase tracking-widest pl-2 border-l border-gray-800">
+            <!-- COL 1: Background "INFO" Text -->
+            <div class="flex flex-col justify-start items-start pt-8">
+                <h1 class="text-[12vw] font-bold leading-none opacity-20 uppercase select-none">INFO</h1>
+            </div>
+
+            <!-- COL 2: STUDIO CAPABILITIES (Bottom-aligned) -->
+            <div class="flex flex-col justify-end pb-12">
+                <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-4 font-mono">STUDIO CAPABILITIES</h3>
+                <ul class="text-sm font-mono uppercase text-white space-y-2">
+                    <li>AI MODEL DEPLOYMENT</li>
+                    <li>FINTECH INFRASTRUCTURE</li>
+                    <li>WEBGL / SPATIAL COMPUTING</li>
+                    <li>SAAS ARCHITECTURE</li>
+                </ul>
+            </div>
+
+            <!-- COL 3: MAIN CONTENT (Brand + Bio) -->
+            <div class="flex flex-col justify-center pr-8">
+                <h2 class="text-4xl font-bold uppercase tracking-tight text-white mb-2">POLYQORE SYSTEMS</h2>
+                <div class="text-xs font-mono text-gray-500 uppercase tracking-widest mb-6">
                     EST. 2025 &nbsp; • &nbsp; REGISTERED ENTITY
                 </div>
+                <p class="text-base leading-relaxed text-gray-300 max-w-[400px]">
+                    Polyqore Systems is a creative engineering firm specializing in high-performance digital infrastructure. Founded by Sameer Dhir and Shresth Senwal, the studio bridges the gap between enterprise-grade systems and immersive interaction design.
+                </p>
             </div>
 
-            <!-- COL 2: BIO TEXT -->
-            <div class="info-col col-span-1 md:col-span-2 p-8 pt-14 flex flex-col justify-center">
-                <div class="max-w-2xl">
-                    <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-6">Polyqore Systems</h2>
-                    <p class="text-lg md:text-xl leading-relaxed text-gray-300 mb-8">
-                        Polyqore Systems is a creative engineering firm specializing in high-performance digital infrastructure. Founded by Sameer Dhir and Shresth Senwal, the studio bridges the gap between enterprise-grade systems and immersive interaction design.
-                    </p>
-                </div>
-            </div>
-
-            <!-- COL 3: EXECUTIVE LEADERSHIP (Text-only) -->
-            <div class="info-col col-span-1 p-8 pt-14 flex flex-col justify-start">
-                <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-6">EXECUTIVE LEADERSHIP</h3>
-
-                <div class="flex flex-col gap-6">
-                    <div>
-                        <p class="text-sm">
-                            <span class="text-xl font-bold tracking-widest">SAMEER DHIR</span>
-                            <span class="mx-3 text-gray-500">→</span>
-                            <span class="font-mono text-xs uppercase text-gray-400">CO-FOUNDER &amp; CTO</span>
-                            <span class="mx-3 text-gray-500">→</span>
-                            <span class="text-sm text-gray-300">Full Stack Architecture &amp; Deep Learning</span>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-sm">
-                            <span class="text-xl font-bold tracking-widest">SHRESTH SENWAL</span>
-                            <span class="mx-3 text-gray-500">→</span>
-                            <span class="font-mono text-xs uppercase text-gray-400">CO-FOUNDER &amp; SYSTEMS ARCHITECT</span>
-                            <span class="mx-3 text-gray-500">→</span>
-                            <span class="text-sm text-gray-300">Distributed Systems &amp; Core Engineering</span>
-                        </p>
+            <!-- COL 4: LEADERSHIP + CONTACT -->
+            <div class="flex flex-col justify-between py-12">
+                <!-- Top: Executive Leadership -->
+                <div>
+                    <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-4 font-mono">EXECUTIVE LEADERSHIP</h3>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <p class="font-bold tracking-wider text-white">SAMEER DHIR</p>
+                            <p class="text-xs text-gray-400 uppercase font-mono">CO-FOUNDER &amp; CTO</p>
+                        </div>
+                        <div>
+                            <p class="font-bold tracking-wider text-white">SHRESTH SENWAL</p>
+                            <p class="text-xs text-gray-400 uppercase font-mono">CO-FOUNDER &amp; SYSTEMS ARCHITECT</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- COL 4: STUDIO CAPABILITIES (Text-only) -->
-            <div class="info-col col-span-1 p-8 pt-14 flex flex-col justify-between items-end text-right">
-                <div class="w-full">
-                    <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-6">STUDIO CAPABILITIES</h3>
-                    <ul class="text-sm font-bold uppercase text-white space-y-3">
-                        <li>AI MODEL DEPLOYMENT</li>
-                        <li>FINTECH INFRASTRUCTURE</li>
-                        <li>WEBGL / SPATIAL COMPUTING</li>
-                        <li>SAAS ARCHITECTURE</li>
-                    </ul>
-                </div>
-
-                <div class="pt-8 text-[10px] text-gray-600 font-mono">
-                    © 2026 Polyqore Systems<br>All Rights Reserved
+                <!-- Bottom: Contact Info -->
+                <div>
+                    <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-4 font-mono">CONTACT</h3>
+                    <div class="space-y-3">
+                        <a href="tel:+919999885717" class="block text-2xl font-bold text-white hover:text-gray-400 transition-colors">+91 99998 85717</a>
+                        <a href="mailto:contact@polyqore.com" class="block text-sm text-gray-300 hover:text-white transition-colors">contact@polyqore.com</a>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest font-mono">NEW DELHI, IN</p>
+                    </div>
                 </div>
             </div>
         </div>
