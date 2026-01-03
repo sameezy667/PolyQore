@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PolyQore | Creative Engineering Duo</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#050505',
+                        fg: '#EAEAEA',
+                        line: '#222222'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    gridTemplateColumns: {
+                        '4': 'repeat(4, minmax(0, 1fr))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- SplitType for Text Animation -->
+    <script src="https://unpkg.com/split-type"></script>
+    
+    <style>
+        body { 
+            background-color: #050505; 
+            color: #EAEAEA; 
+            overflow: hidden;
+        }
+        
+        /* Persistent Grid Lines */
+        .dashed-r {
+            border-right: 1px dashed #222;
+        }
+
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+
+        /* Swiper Carousel Styling */
+        .swiper-slide {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .swiper-slide:hover {
+            transform: scale(1.05) translateY(-12px);
+            z-index: 100;
+        }
+
+        .swiper-slide:hover .project-img {
+            opacity: 0.6;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Swiper Navigation Arrows */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #EAEAEA;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #222;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: rgba(234, 234, 234, 0.1);
+            border-color: #444;
+        }
+
+        /* The Magic Hover Effect - Focus on Hovered Slide */
+        .swiper-wrapper:hover .swiper-slide {
+            opacity: 0.3;
+            filter: blur(3px);
+            transform: scale(0.95);
+        }
+        .swiper-wrapper .swiper-slide:hover {
+            opacity: 1 !important;
+            filter: blur(0px) !important;
+            transform: scale(1.05) !important;
+            z-index: 50;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .swiper-slide { 
+            transition: all 0.4s ease-out; 
+        }
+
+        /* Responsive Brand Text */
+        .brand-text {
+            font-size: clamp(4rem, 10vw, 12rem);
+            line-height: 0.8;
+        }
+        
+        /* Cinematic Noise Overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.05;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            animation: grain 8s steps(10) infinite;
+        }
+        
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            30% { transform: translate(3%, -15%); }
+            50% { transform: translate(12%, 9%); }
+            70% { transform: translate(9%, 4%); }
+            90% { transform: translate(-1%, 7%); }
+        }
+        
+        /* Archive View Styling */
+        .archive-table {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .archive-row {
+            border-bottom: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-row:hover {
+            background: #EAEAEA;
+            color: #000;
+        }
+        
+        .archive-row:hover * {
+            color: #000;
+        }
+
+        /* ========================================
+           SACH.AI MOBILE SHOWCASE STYLES
+           ======================================== */
+        
+        /* Perspective Container for 3D Effect */
+        .perspective-container {
+            perspective: 2000px;
+            perspective-origin: center center;
+        }
+
+        /* iPhone 15 Pro Frame - Pure CSS */
+        .iphone-frame {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 12px solid #333;
+            border-radius: 55px;
+            box-shadow: 
+                0 0 0 2px #1a1a1a,
+                0 0 0 4px #2a2a2a,
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                0 10px 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
+        }
+
+        /* Dynamic Island Notch */
+        .dynamic-island {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 25px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* iPhone Screen */
+        .iphone-screen {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+        }
+
+        /* Screen Image */
+        .screen-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Side Buttons (Physical Details) */
+        .side-button {
+            position: absolute;
+            background: #2a2a2a;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 1px 2px rgba(0, 0, 0, 0.5),
+                0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .side-button-left {
+            left: -5px;
+            top: 120px;
+            width: 4px;
+            height: 60px;
+        }
+
+        .side-button-right-1 {
+            right: -5px;
+            top: 180px;
+            width: 4px;
+            height: 50px;
+        }
+
+        .side-button-right-2 {
+            right: -5px;
+            top: 240px;
+            width: 4px;
+            height: 50px;
+        }
+
+        /* Screen Selector Dots */
+        .screen-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #666;
+            background: transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .screen-dot:hover {
+            border-color: #fff;
+        }
+
+        .screen-dot.active {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .iphone-frame {
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .iphone-frame {
+                transform: scale(0.6);
+            }
+        }
+
+        /* ========================================
+           FINTRAK MOBILE SHOWCASE STYLES
+           Matte Black iPhone 15 Pro Theme
+           ======================================== */
+        
+        /* Perspective Container for 3D Effect */
+        .perspective-container-fintrak {
+            perspective: 2000px;
+            perspective-origin: center center;
+        }
+
+        /* iPhone 15 Pro Frame - Matte Black Theme */
+        .iphone-frame-fintrak {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background: linear-gradient(145deg, #0a0a0a, #050505);
+            border: 12px solid #222;
+            border-radius: 55px;
+            box-shadow: 
+                0 0 0 2px #111,
+                0 0 0 4px #1a1a1a,
+                0 30px 80px rgba(0, 0, 0, 0.9),
+                0 10px 30px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transform-style: preserve-3d;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
+        }
+
+        /* Dynamic Island Notch */
+        .dynamic-island-fintrak {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 25px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        /* iPhone Screen */
+        .iphone-screen-fintrak {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+        }
+
+        /* Screen Image */
+        .screen-image-fintrak {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Side Buttons (Physical Details) - Matte Black */
+        .side-button-fintrak {
+            position: absolute;
+            background: #1a1a1a;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 1px 2px rgba(0, 0, 0, 0.6),
+                0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .side-button-left-fintrak {
+            left: -5px;
+            top: 120px;
+            width: 4px;
+            height: 60px;
+        }
+
+        .side-button-right-1-fintrak {
+            right: -5px;
+            top: 180px;
+            width: 4px;
+            height: 50px;
+        }
+
+        .side-button-right-2-fintrak {
+            right: -5px;
+            top: 240px;
+            width: 4px;
+            height: 50px;
+        }
+
+        /* Screen Selector Dots */
+        .screen-dot-fintrak {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #666;
+            background: transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .screen-dot-fintrak:hover {
+            border-color: #fff;
+        }
+
+        .screen-dot-fintrak.active {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .iphone-frame-fintrak {
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .iphone-frame-fintrak {
+                transform: scale(0.6);
+            }
+        }
+    </style>
+
+</head>
+<body class="h-screen w-screen relative font-sans antialiased selection:bg-white selection:text-black">
+
+    <!-- Cinematic Noise Overlay -->
+    <div class="noise"></div>
+
+    <!-- BACKGROUND GRID LAYER (Persistent Lines) -->
+    <div class="absolute inset-0 z-0 grid grid-cols-4 pointer-events-none h-full w-full">
+        <div class="dashed-r h-full"></div>
+        <div class="dashed-r h-full"></div>
+        <div class="dashed-r h-full"></div>
+        <!-- Last column has no right border -->
+        <div class="h-full"></div>
+    </div>
+
+    <!-- HOME VIEW DASHBOARD -->
+    <div id="home-view" class="relative z-10 w-full h-full flex flex-col">
+        
+        <!-- Top Section: 75vh with 4-Column Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 h-[75vh] relative pointer-events-none">
+            
+            <!-- COL 1 & 2: MASSIVE POLYQORE BRAND -->
+            <div class="col-span-1 md:col-span-2 p-6 md:p-8 pt-12 flex flex-col justify-center">
+                <h1 id="main-hero-title" class="brand-text font-black uppercase tracking-tighter mix-blend-difference select-none whitespace-pre-line pointer-events-auto transition-colors duration-300">POLY
+QORE</h1>
+                
+                <div class="mt-8 md:mt-12 text-xs font-mono text-gray-500 uppercase tracking-widest pl-2 border-l border-gray-800">
+                    Est. 2025<br>System Active
+                </div>
+            </div>
+
+            <!-- COL 3: ROLE / METADATA -->
+            <div class="hidden md:flex col-span-1 flex-col p-8 pt-14 pointer-events-auto">
+                <div class="mb-12">
+                    <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-2">Founders</h3>
+                    <p class="text-xl font-bold uppercase leading-tight">Sameer Dhir<br>Shresth Senwal</p>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-2">Services</h3>
+                    <ul class="text-sm font-medium uppercase text-gray-400 space-y-1 leading-tight">
+                        <li>ML Pipelines</li>
+                        <li>WebGL / Three.js</li>
+                        <li>Backend Architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COL 4: NAV & LOCATION (Aligned to bottom) -->
+            <div class="col-span-1 flex flex-col justify-between p-6 md:p-8 pt-14 items-end text-right pointer-events-auto">
+                <nav class="flex flex-col gap-2 text-sm font-bold uppercase tracking-widest">
+                    <a href="#" class="hover:text-white text-gray-500 transition-colors group flex items-center justify-end gap-2">
+                        Work <span class="opacity-0 group-hover:opacity-100 transition-opacity">/</span>
+                    </a>
+                    <a href="#" id="info-nav-link" class="hover:text-white text-gray-500 transition-colors group flex items-center justify-end gap-2">
+                        Info <span class="opacity-0 group-hover:opacity-100 transition-opacity">/</span>
+                    </a>
+                    <a href="#" id="archive-nav-link" class="hover:text-white text-gray-500 transition-colors group flex items-center justify-end gap-2">
+                        Archive <span class="opacity-0 group-hover:opacity-100 transition-opacity">/</span>
+                    </a>
+                </nav>
+
+                <!-- Location & Time (Bottom Aligned) -->
+                <div>
+                    <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-1">Location</h3>
+                    <p class="text-lg md:text-xl font-bold uppercase">New Delhi, IN</p>
+                    <p id="clock" class="text-xs text-gray-600 font-mono mt-1">00:00:00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CAROUSEL: 25vh Fixed Height -->
+        <div class="h-[25vh] w-full border-t border-line bg-bg relative z-20">
+            <!-- Swiper Container -->
+            <div class="swiper h-[25vh] w-full">
+                <div class="swiper-wrapper" id="carousel-wrapper">
+                    <!-- Slides injected via JS -->
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFO VIEW OVERLAY -->
+    <section id="info-view" class="fixed inset-0 z-[100] bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none">
+        <!-- Background Grid (Same as homepage) -->
+        <div class="absolute inset-0 z-0 grid grid-cols-4 pointer-events-none h-full w-full">
+            <div class="dashed-r h-full"></div>
+            <div class="dashed-r h-full"></div>
+            <div class="dashed-r h-full"></div>
+            <div class="h-full"></div>
+        </div>
+
+        <!-- Close Button (Top Right) -->
+        <button id="close-info-btn" class="absolute top-8 right-8 z-50 group flex items-center gap-3 text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors pointer-events-auto">
+            <span>Close</span>
+            <span class="border border-line px-2 py-1 group-hover:bg-white group-hover:text-black transition-colors">X</span>
+        </button>
+
+        <!-- Content Grid -->
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-4 h-full w-full">
+            
+            <!-- COL 1: MASSIVE INFO HEADER -->
+            <div class="info-col col-span-1 p-8 pt-14 flex flex-col justify-start overflow-hidden">
+                <h1 class="text-[18vh] leading-[0.8] font-black uppercase tracking-tighter select-none whitespace-pre-line">INFO</h1>
+                <div class="mt-12 text-xs font-mono text-gray-500 uppercase tracking-widest pl-2 border-l border-gray-800">
+                    Est. 2025<br>Digital Pioneers
+                </div>
+            </div>
+
+            <!-- COL 2-3: BIO TEXT (Centered Vertically) -->
+            <div class="info-col col-span-1 md:col-span-2 p-8 pt-14 flex flex-col justify-center">
+                <div class="max-w-2xl">
+                    <h2 id="bio-header" class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-8">POLYQORE</h2>
+                    <p id="bio-text" class="text-lg md:text-xl leading-relaxed text-gray-300 mb-12">
+                        We are Polyqore. A creative engineering duo bridging the gap between High-Performance Systems and Interactive Design. Founded by Sameer Dhir and Shresth Senwal, we specialize in ML Pipelines, WebGL/Three.js experiences, and Scalable Backend Architectures.
+                    </p>
+
+                    <!-- Team Section with Profile Images -->
+                    <div class="border-t border-gray-800 pt-8">
+                        <h3 class="text-xs text-gray-500 uppercase tracking-widest mb-6">Founders</h3>
+                        <div class="flex gap-12 items-start">
+                            <div>
+                                <h4 class="text-sm font-bold tracking-widest text-white">SAMEER DHIR</h4>
+                                <p class="text-xs text-gray-500 mt-1">Full Stack & Deep Learning</p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-sm font-bold tracking-widest text-white">SHRESTH SENWAL</h4>
+                                <p class="text-xs text-gray-500 mt-1">Core Engineering & Systems</p>
+                            </div>
+                        </div>
+                        <div class="mt-8 space-y-3">
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="w-2 h-2 bg-gray-600 rounded-full"></span>
+                                <span>React • Python • Three.js • TypeScript</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="w-2 h-2 bg-gray-600 rounded-full"></span>
+                                <span>C++ • Linux • Distributed Systems • DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COL 4: CONTACT/SOCIAL LINKS (Bottom Right) -->
+            <div class="info-col col-span-1 p-8 pt-14 flex flex-col justify-end items-end text-right">
+                <div class="space-y-6">
+                    <div>
+                            <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-3">Contact</h3>
+                            <a href="tel:+919999885717" class="text-sm hover:text-white transition-colors block mb-2">+91 99998 85717</a>
+                    </div>
+
+                    <div class="pt-12 text-[10px] text-gray-600 font-mono">
+                        © 2026 Polyqore<br>All Rights Reserved
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHIVE VIEW -->
+    <section id="archive-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
+        <!-- Close Button (Top Right) -->
+        <button id="close-archive-btn" class="absolute top-8 right-8 z-50 group flex items-center gap-3 text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors pointer-events-auto">
+            <span>Close</span>
+            <span class="border border-line px-2 py-1 group-hover:bg-white group-hover:text-black transition-colors">X</span>
+        </button>
+
+        <!-- Archive Content -->
+        <div class="h-full w-full overflow-y-auto p-8 md:p-16">
+            <!-- Header -->
+            <div class="mb-12">
+                <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4">ARCHIVE</h1>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-mono">Experiments / Hackathons / Modules</p>
+            </div>
+
+            <!-- Data Table -->
+            <div class="archive-table max-w-6xl">
+                <!-- Table Headers -->
+                <div class="grid grid-cols-4 gap-4 py-4 border-b-2 border-gray-700 mb-2 text-xs text-gray-500 uppercase tracking-widest font-mono">
+                    <div>01 / YEAR</div>
+                    <div>02 / PROJECT</div>
+                    <div>03 / TYPE</div>
+                    <div>04 / RESULT</div>
+                </div>
+
+                <!-- Data Rows -->
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="1">
+                    <div class="font-mono text-sm">2025</div>
+                    <div class="font-bold text-sm">Smart India Hackathon</div>
+                    <div class="text-sm text-gray-400">IoT / Architecture</div>
+                    <div class="text-sm text-green-400">Grand Finalist</div>
+                </div>
+
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="2">
+                    <div class="font-mono text-sm">2025</div>
+                    <div class="font-bold text-sm">Trilytics Data Challenge</div>
+                    <div class="text-sm text-gray-400">Data Science</div>
+                    <div class="text-sm text-cyan-400">Top 10 / 7k</div>
+                </div>
+
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="3">
+                    <div class="font-mono text-sm">2025</div>
+                    <div class="font-bold text-sm">UAV Flight Controller</div>
+                    <div class="text-sm text-gray-400">Systems / C++</div>
+                    <div class="text-sm text-yellow-400">IEEE RAS Lead</div>
+                </div>
+
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="4">
+                    <div class="font-mono text-sm">2024</div>
+                    <div class="font-bold text-sm">IPO Engine (Bluestock)</div>
+                    <div class="text-sm text-gray-400">Fintech / React</div>
+                    <div class="text-sm text-green-400">Production</div>
+                </div>
+
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="5">
+                    <div class="font-mono text-sm">2024</div>
+                    <div class="font-bold text-sm">3D Disaster Globe</div>
+                    <div class="text-sm text-gray-400">WebGL / Three.js</div>
+                    <div class="text-sm text-purple-400">Experiment</div>
+                </div>
+
+                <div class="archive-row grid grid-cols-4 gap-4 py-6 cursor-pointer" data-index="6">
+                    <div class="font-mono text-sm">2025</div>
+                    <div class="font-bold text-sm">Techno Vision 3.0</div>
+                    <div class="text-sm text-gray-400">Hackathon</div>
+                    <div class="text-sm text-orange-400">Runner-Up</div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-24 text-xs text-gray-600 font-mono">
+                <p>© 2026 Polyqore. All experiments tracked.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SACH.AI MOBILE SHOWCASE MODAL -->
+    <section id="sach-showcase" class="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl hidden opacity-0 pointer-events-none">
+        <!-- Close Button -->
+        <button id="close-sach-btn" class="absolute top-8 right-8 z-50 group flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white hover:text-gray-400 transition-colors">
+            <span>Close</span>
+            <span class="border border-gray-600 px-3 py-1 group-hover:bg-white group-hover:text-black transition-colors">X</span>
+        </button>
+
+        <!-- Main Container -->
+        <div class="h-full w-full flex items-center justify-center p-8 md:p-16">
+            <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <!-- LEFT: iPhone 15 Pro Component -->
+                <div class="flex items-center justify-center perspective-container">
+                    <div class="iphone-frame" id="iphone-tilt">
+                        <!-- Dynamic Island Notch -->
+                        <div class="dynamic-island"></div>
+                        
+                        <!-- Screen Content -->
+                        <div class="iphone-screen">
+                            <img src="./Sach.ai/Screenshot 2026-01-03 013757.png" alt="Sach.ai Mobile" class="screen-image" id="screen-image" />
+                        </div>
+                        
+                        <!-- Side Buttons (CSS Details) -->
+                        <div class="side-button side-button-left"></div>
+                        <div class="side-button side-button-right-1"></div>
+                        <div class="side-button side-button-right-2"></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Project Details -->
+                <div class="text-white space-y-8">
+                    <div>
+                        <div class="text-xs font-mono text-gray-500 mb-2 uppercase tracking-widest">Featured Project</div>
+                        <h2 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">
+                            SACH.AI
+                        </h2>
+                        <p class="text-xl text-gray-400 uppercase tracking-wide">AI-Powered Food Analyzer</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2">Description</h3>
+                            <p class="text-gray-300 leading-relaxed">
+                                An intelligent food analyzer that uses AI to provide personalized dietary insights. Built for the EnCode 2026 Hackathon with a focus on AI-native experience, real-time streaming, and generative UI.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2">Technology Stack</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">React Native</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">Python</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">AI/ML</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">Generative UI</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">Real-time</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div>
+                                <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">Category</h3>
+                                <p class="text-white font-bold uppercase">AI/ML</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">Year</h3>
+                                <p class="text-white font-bold uppercase">2026</p>
+                            </div>
+                        </div>
+
+                        <!-- Screen Selector Dots -->
+                        <div class="pt-6 flex items-center gap-3">
+                            <span class="text-xs text-gray-500 uppercase tracking-wider">Screens:</span>
+                            <div class="flex gap-2">
+                                <button class="screen-dot active" data-screen="0"></button>
+                                <button class="screen-dot" data-screen="1"></button>
+                                <button class="screen-dot" data-screen="2"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="https://truth-pulse-seven.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-4 border border-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                            Launch App
+                        </a>
+                        <a href="/downloads/sach-ai.apk" download class="inline-block px-8 py-4 border border-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all bg-transparent">
+                            Download APK
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINTRAK MOBILE SHOWCASE MODAL -->
+    <section id="fintrak-showcase" class="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl hidden opacity-0 pointer-events-none">
+        <!-- Close Button -->
+        <button id="close-fintrak-btn" class="absolute top-8 right-8 z-50 group flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-white hover:text-gray-400 transition-colors">
+            <span>Close</span>
+            <span class="border border-gray-600 px-3 py-1 group-hover:bg-white group-hover:text-black transition-colors">X</span>
+        </button>
+
+        <!-- Main Container -->
+        <div class="h-full w-full flex items-center justify-center p-8 md:p-16">
+            <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <!-- LEFT: iPhone 15 Pro Component -->
+                <div class="flex items-center justify-center perspective-container-fintrak">
+                    <div class="iphone-frame-fintrak" id="iphone-tilt-fintrak">
+                        <!-- Dynamic Island Notch -->
+                        <div class="dynamic-island-fintrak"></div>
+                        
+                        <!-- Screen Content -->
+                        <div class="iphone-screen-fintrak">
+                            <img src="./Fintrak/Screenshot 2026-01-03 184457.png" alt="Fintrak Mobile" class="screen-image-fintrak" id="screen-image-fintrak" />
+                        </div>
+                        
+                        <!-- Side Buttons (CSS Details) -->
+                        <div class="side-button-fintrak side-button-left-fintrak"></div>
+                        <div class="side-button-fintrak side-button-right-1-fintrak"></div>
+                        <div class="side-button-fintrak side-button-right-2-fintrak"></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Project Details -->
+                <div class="text-white space-y-8">
+                    <div>
+                        <div class="text-xs font-mono text-gray-500 mb-2 uppercase tracking-widest">Featured Project</div>
+                        <h2 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">
+                            FINTRAK
+                        </h2>
+                        <p class="text-xl text-gray-400 uppercase tracking-wide">Personal Finance Dashboard</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2">Description</h3>
+                            <p class="text-gray-300 leading-relaxed">
+                                Personal Finance & Expense Tracking Dashboard. Features real-time visualization, secure data encryption, and intelligent budgeting insights designed for Gen Z users.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2">Technology Stack</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">React</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">Node.js</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">D3.js</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">MongoDB</span>
+                                <span class="px-3 py-1 border border-gray-700 text-xs uppercase tracking-wider">Encryption</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div>
+                                <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">Category</h3>
+                                <p class="text-white font-bold uppercase">FinTech</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">Year</h3>
+                                <p class="text-white font-bold uppercase">2026</p>
+                            </div>
+                        </div>
+
+                        <!-- Screen Selector Dots -->
+                        <div class="pt-6 flex items-center gap-3">
+                            <span class="text-xs text-gray-500 uppercase tracking-wider">Screens:</span>
+                            <div class="flex gap-2">
+                                <button class="screen-dot-fintrak active" data-screen="0"></button>
+                                <button class="screen-dot-fintrak" data-screen="1"></button>
+                                <button class="screen-dot-fintrak" data-screen="2"></button>
+                                <button class="screen-dot-fintrak" data-screen="3"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://fintrack-genz-vision.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-block mt-8 px-8 py-4 border border-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                        Launch App
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT DETAIL OVERLAY -->
+    <div id="project-view" class="fixed inset-0 z-50 bg-bg translate-y-full flex flex-col will-change-transform">
+        
+        <!-- Header Strip -->
+        <div class="h-20 border-b border-line flex justify-between items-center px-6 md:px-8 bg-bg z-10 shrink-0">
+            <div class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">
+                Project Detail <span class="text-white mx-2">//</span> <span id="view-id">01</span>
+            </div>
+            <button id="close-btn" class="group flex items-center gap-3 text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors">
+                <span class="scramble-hover">Close View</span>
+                <span class="border border-line px-2 py-1 group-hover:bg-white group-hover:text-black transition-colors">X</span>
+            </button>
+        </div>
+
+        <!-- Content Split -->
+        <div class="flex-grow grid grid-cols-1 lg:grid-cols-3 h-full overflow-hidden">
+            
+            <!-- Left: Info (Scrollable on mobile) -->
+            <div class="lg:col-span-1 border-r border-line p-8 md:p-12 overflow-y-auto custom-scroll relative bg-bg">
+                <!-- Background Grid for Detail Left -->
+                <div class="absolute inset-0 grid grid-cols-2 pointer-events-none opacity-20">
+                    <div class="dashed-r h-full"></div>
+                    <div class="h-full"></div>
+                </div>
+
+                <div class="relative z-10">
+                    <h1 id="detail-title" class="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-12 break-words">
+                        PROJECT<br>NAME
+                    </h1>
+
+                    <p id="detail-desc" class="text-lg md:text-xl text-gray-400 font-medium leading-relaxed mb-16 max-w-md">
+                        Project description goes here. It should be concise but descriptive.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-8 text-xs uppercase tracking-[0.15em] border-t border-dashed border-gray-800 pt-8">
+                        <div>
+                            <span class="text-gray-600 block mb-2">Client</span>
+                            <span id="detail-client" class="text-white font-bold block">Google</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 block mb-2">Year</span>
+                            <span id="detail-year" class="text-white font-bold block">2024</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 block mb-2">Sector</span>
+                            <span id="detail-category" class="text-white font-bold block">Tech</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 block mb-2">Output</span>
+                            <span class="text-white font-bold block">Website</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-24 flex flex-col sm:flex-row gap-4">
+                        <a id="launch-project-btn" href="#" target="_blank" rel="noopener noreferrer" class="inline-block border border-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all text-center">
+                            Launch Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Gallery (Scrollable) -->
+            <div id="detail-gallery" class="lg:col-span-2 overflow-y-auto custom-scroll bg-[#080808] p-0">
+                <!-- Images injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /**
+         * Project Data - Real Projects by Polyqore
+         * Sameer Dhir & Shresth Senwal
+         */
+        const PROJECTS = [
+            {
+                id: '01',
+                title: 'FLAGR',
+                subtitle: 'Legal Risk AI',
+                client: 'Personal',
+                year: '2025',
+                category: 'AI/ML',
+                description: 'Modern, intelligent document analysis and chat platform built with React and TypeScript. Combines AI-driven document processing with intuitive chat interface, enabling users to interact with documents through natural language conversations.',
+                img: './Flagr/Screenshot 2026-01-03 013332.png',
+                gallery: ['./Flagr/Screenshot 2026-01-03 013332.png', './Flagr/Screenshot 2026-01-03 013445.png', './Flagr/Screenshot 2026-01-03 013606.png'],
+                link: 'https://flagr.vercel.app/'
+            },
+            {
+                id: '02',
+                title: 'ALERT-AID',
+                subtitle: 'Disaster ML',
+                client: 'Personal',
+                year: '2025',
+                category: 'AI/ML',
+                description: 'Production-ready disaster prediction and alert system with React, TypeScript, and ML. Features interactive 3D globe, real-time weather monitoring, and intelligent risk assessment.',
+                img: './Alert-Aid/Screenshot 2026-01-03 015733.png',
+                gallery: ['./Alert-Aid/Screenshot 2026-01-03 015733.png', './Alert-Aid/Screenshot 2026-01-03 020022.png', './Alert-Aid/Screenshot 2026-01-03 020037.png'],
+                link: 'https://alert-aid.vercel.app/'
+            },
+            {
+                id: '03',
+                title: 'SACH.AI',
+                subtitle: 'Dashboard',
+                client: 'EnCode 2026',
+                year: '2026',
+                category: 'AI/ML',
+                description: 'Intelligent food analyzer using AI to provide personalized dietary insights. Built for EnCode 2026 Hackathon with focus on AI-native experience, real-time streaming, and generative UI.',
+                img: './Sach.ai/Screenshot 2026-01-03 013757.png',
+                gallery: ['./Sach.ai/Screenshot 2026-01-03 013757.png', './Sach.ai/Screenshot 2026-01-03 013809.png', './Sach.ai/Screenshot 2026-01-03 013836.png'],
+                link: 'https://truth-pulse-seven.vercel.app/'
+            },
+            {
+                id: '04',
+                title: 'RESQ',
+                subtitle: 'Drone Tech',
+                client: 'Personal',
+                year: '2025',
+                category: 'SaaS',
+                description: 'Production-ready emergency response platform for real-time incident coordination. Built with React, TypeScript, Supabase, and Leaflet, connecting citizens, emergency responders, and resources in critical moments.',
+                img: './ResQ/Screenshot 2026-01-03 014140.png',
+                gallery: ['./ResQ/Screenshot 2026-01-03 014140.png', './ResQ/Screenshot 2026-01-03 014159.png', './ResQ/Screenshot 2026-01-03 014234.png', './ResQ/Screenshot 2026-01-03 014314.png'],
+                link: 'https://res-q-f.vercel.app/'
+            },
+            {
+                id: '05',
+                title: 'DJEDOPS',
+                subtitle: 'StockLens - Fintech',
+                client: 'Ergo Ecosystem',
+                year: '2025',
+                category: 'FinTech',
+                description: 'Mission-critical monitoring platform for Djed algorithmic stablecoin protocol on Ergo blockchain. Features live blockchain data, 3D visualizations, and automated risk management with Financial Brutalism design.',
+                img: './DJEDops/Screenshot 2026-01-03 014950.png',
+                gallery: ['./DJEDops/Screenshot 2026-01-03 014950.png', './DJEDops/Screenshot 2026-01-03 015019.png', './DJEDops/Screenshot 2026-01-03 015043.png', './DJEDops/Screenshot 2026-01-03 015108.png'],
+                link: 'https://djed-ops.vercel.app/'
+            },
+            {
+                id: '06',
+                title: 'FLOWKEY',
+                subtitle: 'N.E.W.S - IoT System',
+                client: 'Collaborative',
+                year: '2026',
+                category: 'AI/ML',
+                description: 'Modern, accessible frontend with React, TypeScript, and Tailwind CSS. Features real-time AI-powered chat via Google Gemini API with persistent conversation history and streaming responses.',
+                img: './Flowkey/Screenshot 2026-01-03 020600.png',
+                gallery: ['./Flowkey/Screenshot 2026-01-03 020600.png', './Flowkey/Screenshot 2026-01-03 020600.png', './Flowkey/Screenshot 2026-01-03 020600.png'],
+                link: 'https://flow-key-iota.vercel.app/'
+            },
+            {
+                id: '07',
+                title: 'FINTRAK',
+                subtitle: 'FinTrack GenZ Vision',
+                client: 'Personal',
+                year: '2026',
+                category: 'FinTech',
+                description: 'Modern, full-stack personal finance management application designed for Gen Z users. Leverages AI-powered insights, secure authentication, and a responsive, accessible UI to help users track spending, set savings goals, and gain actionable financial feedback.',
+                img: './Fintrak/Screenshot 2026-01-03 190723.png',
+                gallery: ['./Fintrak/Screenshot 2026-01-03 190723.png'],
+                link: 'https://fintrack-genz-vision.vercel.app/'
+            },
+            {
+                id: '08',
+                title: 'PRISM',
+                subtitle: 'AI Topic Analysis',
+                client: 'Personal',
+                year: '2026',
+                category: 'AI/ML',
+                description: 'Sophisticated, AI-powered topic analysis platform designed to provide comprehensive, multi-perspective analysis of any given topic. Aggregates and analyzes content from across the digital world, presenting users with detailed insights, diverse viewpoints, and emerging trends in a stunning, modern interface.',
+                img: './Prism/Screenshot 2026-01-03 172944.png',
+                gallery: ['./Prism/Screenshot 2026-01-03 172944.png', './Prism/Screenshot 2026-01-03 173015.png', './Prism/Screenshot 2026-01-03 173028.png'],
+                link: 'https://prism-app-nine.vercel.app/'
+            }
+        ];
+
+        // --- TEXT SCRAMBLE CLASS ---
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    
+                    // Prevent scrambling newlines to avoid layout jumping
+                    if (from === '\n' || to === '\n') {
+                        output += to;
+                        complete++;
+                        continue;
+                    }
+
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="opacity-50">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                // CRITICAL FIX: Use innerHTML so the span tags render as elements, not text.
+                this.el.innerHTML = output; 
+                
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Clock
+            const clockEl = document.getElementById('clock');
+            setInterval(() => {
+                const now = new Date();
+                clockEl.innerText = now.toLocaleTimeString('en-GB'); // 24h format
+            }, 1000);
+
+            // 2. Initial Scramble (Logo)
+            const mainTitleEl = document.getElementById('main-hero-title');
+            const mainFx = new TextScramble(mainTitleEl);
+            mainFx.setText("POLY\nQORE");
+
+            // 3. Build Swiper Carousel
+            const carouselWrapper = document.getElementById('carousel-wrapper');
+            PROJECTS.forEach((p, idx) => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.innerHTML = `
+                    <!-- Image -->
+                    <img src="${p.img}" class="project-img" alt="${p.title}" onload="console.log('✅ Loaded:', '${p.title}')" onerror="console.error('❌ Failed to load:', '${p.title}', this.src); this.style.opacity='0.1';" />
+                    
+                    <!-- Content Overlay - Large Text Inside -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                        <span class="text-[10px] font-mono text-gray-500 mb-2 block">0${idx + 1}</span>
+                        <h3 class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white transition-colors duration-300 hover:text-green-400">
+                            ${p.title}
+                        </h3>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mt-2">${p.subtitle}</p>
+                    </div>
+                    
+                    <!-- Top Accent Line -->
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                `;
+
+                // Special handling for Sach.ai and Fintrak - Open Mobile Showcase instead of regular detail view
+                if (p.title === 'SACH.AI') {
+                    slide.addEventListener('click', () => {
+                        console.log('🎯 Sach.ai clicked - Opening Mobile Showcase');
+                        openSachShowcase();
+                    });
+                } else if (p.title === 'FINTRAK') {
+                    slide.addEventListener('click', () => {
+                        console.log('💰 Fintrak clicked - Opening Mobile Showcase');
+                        openFintrakShowcase();
+                    });
+                } else {
+                    // Click to Open Project (Regular Behavior)
+                    slide.addEventListener('click', () => openProject(p));
+                }
+
+                carouselWrapper.appendChild(slide);
+            });
+            
+            console.log('📸 Carousel: Loaded', PROJECTS.length, 'project slides');
+
+            // Initialize Swiper
+            const swiper = new Swiper('.swiper', {
+                slidesPerView: 1,
+                spaceBetween: 2,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 2,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 2,
+                    }
+                },
+                loop: true,
+                grabCursor: true
+            });
+
+            // Text Scramble on Slide Hover
+            const slides = document.querySelectorAll('.swiper-slide');
+            slides.forEach(slide => {
+                slide.addEventListener('mouseenter', (e) => {
+                    const idx = parseInt(e.currentTarget.querySelector('.text-\\[10px\\]').textContent) - 1;
+                    if (PROJECTS[idx]) {
+                        mainFx.setText(PROJECTS[idx].title);
+                    }
+                });
+
+                slide.addEventListener('mouseleave', () => {
+                    mainFx.setText("POLY\nQORE");
+                });
+            });
+
+            // 4. View Transitions
+            const homeView = document.getElementById('home-view');
+            const projectView = document.getElementById('project-view');
+            const closeBtn = document.getElementById('close-btn');
+
+            function openProject(p) {
+                // Populate Detail
+                document.getElementById('view-id').innerText = p.id;
+                document.getElementById('detail-title').innerText = p.title; 
+                document.getElementById('detail-desc').innerText = p.description;
+                document.getElementById('detail-client').innerText = p.client;
+                document.getElementById('detail-year').innerText = p.year;
+                document.getElementById('detail-category').innerText = p.category;
+
+                // Update button links
+                const launchBtn = document.getElementById('launch-project-btn');
+                
+                if (launchBtn && p.link) {
+                    launchBtn.href = p.link;
+                }
+
+                // Populate Gallery
+                const galContainer = document.getElementById('detail-gallery');
+                galContainer.innerHTML = '';
+                p.gallery.forEach(imgUrl => {
+                    const div = document.createElement('div');
+                    div.className = 'w-full aspect-[16/9] border-b border-line bg-[#111] overflow-hidden group';
+                    div.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover transition-all duration-700" loading="lazy">`;
+                    galContainer.appendChild(div);
+                });
+
+                // Scramble Title on Open
+                const titleFx = new TextScramble(document.getElementById('detail-title'));
+                
+                // Animation
+                gsap.to(projectView, {
+                    y: '0%',
+                    duration: 0.8,
+                    ease: 'power4.inOut',
+                    onComplete: () => {
+                        titleFx.setText(p.title);
+                    }
+                });
+                
+                gsap.to(homeView, {
+                    scale: 0.95,
+                    opacity: 0.5,
+                    duration: 0.8,
+                    ease: 'power4.inOut'
+                });
+            }
+
+            closeBtn.addEventListener('click', () => {
+                gsap.to(projectView, {
+                    y: '100%',
+                    duration: 0.8,
+                    ease: 'power4.inOut'
+                });
+
+                gsap.to(homeView, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power4.inOut'
+                });
+            });
+
+            // Hover effect on Close Button
+            const closeFx = new TextScramble(document.querySelector('.scramble-hover'));
+            closeBtn.addEventListener('mouseenter', () => closeFx.setText('CLOSE VIEW'));
+
+            // --- INFO VIEW LOGIC ---
+            const infoView = document.getElementById('info-view');
+            const closeInfoBtn = document.getElementById('close-info-btn');
+            const infoCols = document.querySelectorAll('.info-col');
+            
+            // Wire up the Info nav link by ID
+            const infoNavLink = document.getElementById('info-nav-link');
+            infoNavLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openInfoView();
+            });
+
+            /**
+             * Opens the INFO view with GSAP animations
+             * - Fades in black background
+             * - Staggers columns up from bottom
+             * - Splits bio text into lines and animates them
+             */
+            function openInfoView() {
+                // Show the view immediately
+                infoView.style.display = 'grid';
+                infoView.classList.remove('hidden');
+                infoView.classList.remove('pointer-events-none');
+
+                // Initialize SplitType for bio text line-by-line reveal
+                const bioText = document.getElementById('bio-text');
+                const split = new SplitType(bioText, { types: 'lines' });
+                
+                // Wrap lines in overflow-hidden divs for slide-up effect
+                split.lines.forEach(line => {
+                    const wrapper = document.createElement('div');
+                    wrapper.style.overflow = 'hidden';
+                    line.parentNode.insertBefore(wrapper, line);
+                    wrapper.appendChild(line);
+                    line.style.transform = 'translateY(100%)';
+                });
+
+                // Create master timeline
+                const tl = gsap.timeline();
+
+                // 1. Fade in background with autoAlpha
+                tl.to(infoView, {
+                    autoAlpha: 1,
+                    duration: 0.6,
+                    ease: 'power2.out'
+                });
+
+                // 2. Stagger columns up from bottom
+                tl.from(infoCols, {
+                    y: '100%',
+                    opacity: 0,
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: 'power4.out'
+                }, '-=0.3');
+
+                // 3. Slide up bio text lines
+                tl.to(split.lines, {
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.05,
+                    ease: 'power3.out'
+                }, '-=0.6');
+
+                // Scale down home view
+                gsap.to(homeView, {
+                    scale: 0.95,
+                    opacity: 0.3,
+                    duration: 0.8,
+                    ease: 'power4.inOut'
+                });
+            }
+
+            /**
+             * Closes the INFO view and reverses animations
+             */
+            function closeInfoView() {
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        infoView.classList.add('hidden');
+                        infoView.classList.add('pointer-events-none');
+                    }
+                });
+
+                // Fade out
+                tl.to(infoView, {
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'power2.in'
+                });
+
+                // Restore home view
+                gsap.to(homeView, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power4.inOut'
+                });
+            }
+
+            closeInfoBtn.addEventListener('click', closeInfoView);
+
+            // Text Scramble on name hover (Sameer & Shresth)
+            const nameLinks = document.querySelectorAll('.scramble-name');
+            nameLinks.forEach(link => {
+                const originalText = link.textContent;
+                const nameFx = new TextScramble(link);
+                
+                link.addEventListener('mouseenter', () => {
+                    nameFx.setText(originalText);
+                });
+            });
+
+            // --- ARCHIVE VIEW LOGIC ---
+            const archiveView = document.getElementById('archive-view');
+            const archiveNavLink = document.getElementById('archive-nav-link');
+            const closeArchiveBtn = document.getElementById('close-archive-btn');
+            const archiveRows = document.querySelectorAll('.archive-row');
+            
+            /**
+             * Opens the Archive view with GSAP staggered row animations
+             */
+            function openArchiveView() {
+                console.log('📁 Opening Archive View');
+                
+                // Show the view immediately
+                archiveView.style.display = 'block';
+                archiveView.classList.remove('hidden');
+                archiveView.classList.remove('pointer-events-none');
+                
+                // Set initial state for rows
+                gsap.set(archiveRows, {
+                    x: -100,
+                    opacity: 0
+                });
+                
+                // Create master timeline
+                const tl = gsap.timeline();
+                
+                // 1. Fade in background
+                tl.to(archiveView, {
+                    autoAlpha: 1,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+                
+                // 2. Stagger in rows from left
+                tl.to(archiveRows, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    stagger: 0.08,
+                    ease: 'power3.out'
+                }, '-=0.2');
+                
+                // Scale down home view
+                gsap.to(homeView, {
+                    scale: 0.95,
+                    opacity: 0.3,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            /**
+             * Closes the Archive view
+             */
+            function closeArchiveView() {
+                console.log('❌ Closing Archive View');
+                
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        archiveView.style.display = 'none';
+                        archiveView.classList.add('hidden');
+                        archiveView.classList.add('pointer-events-none');
+                    }
+                });
+                
+                tl.to(archiveView, {
+                    autoAlpha: 0,
+                    duration: 0.4,
+                    ease: 'power2.in'
+                });
+                
+                // Restore home view
+                gsap.to(homeView, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            // Event Listeners
+            if (archiveNavLink) {
+                archiveNavLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openArchiveView();
+                });
+            }
+            
+            if (closeArchiveBtn) {
+                closeArchiveBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeArchiveView();
+                });
+            }
+            
+            // Text scramble on row hover
+            archiveRows.forEach(row => {
+                const projectName = row.querySelector('.font-bold');
+                if (projectName) {
+                    const originalText = projectName.textContent;
+                    const rowFx = new TextScramble(projectName);
+                    
+                    row.addEventListener('mouseenter', () => {
+                        rowFx.setText(originalText);
+                    });
+                }
+            });
+
+            // ========================================
+            // SACH.AI MOBILE SHOWCASE LOGIC
+            // ========================================
+            
+            const sachShowcase = document.getElementById('sach-showcase');
+            const closeSachBtn = document.getElementById('close-sach-btn');
+            const iphoneTilt = document.getElementById('iphone-tilt');
+            const screenImage = document.getElementById('screen-image');
+            const screenDots = document.querySelectorAll('.screen-dot');
+            
+            // Available screenshots for Sach.ai
+            const sachScreens = [
+                './Sach.ai/Screenshot 2026-01-03 013757.png',
+                './Sach.ai/Screenshot 2026-01-03 013809.png',
+                './Sach.ai/Screenshot 2026-01-03 013836.png'
+            ];
+            
+            /**
+             * Opens the Sach.ai Mobile Showcase Modal with fade-in animation
+             */
+            function openSachShowcase() {
+                console.log('📱 Opening Sach.ai Mobile Showcase');
+                
+                // Show the modal
+                sachShowcase.style.display = 'block';
+                sachShowcase.classList.remove('hidden');
+                sachShowcase.classList.remove('pointer-events-none');
+                
+                // Animate in with GSAP
+                const tl = gsap.timeline();
+                
+                tl.to(sachShowcase, {
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+                
+                tl.from(iphoneTilt, {
+                    scale: 0.5,
+                    opacity: 0,
+                    rotateY: -30,
+                    duration: 0.8,
+                    ease: 'back.out(1.2)'
+                }, '-=0.3');
+                
+                // Scale down home view
+                gsap.to(homeView, {
+                    scale: 0.95,
+                    opacity: 0.3,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            /**
+             * Closes the Sach.ai showcase modal
+             */
+            function closeSachShowcase() {
+                console.log('❌ Closing Sach.ai Mobile Showcase');
+                
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        sachShowcase.style.display = 'none';
+                        sachShowcase.classList.add('hidden');
+                        sachShowcase.classList.add('pointer-events-none');
+                    }
+                });
+                
+                tl.to(sachShowcase, {
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: 'power2.in'
+                });
+                
+                // Restore home view
+                gsap.to(homeView, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            /**
+             * GSAP 3D Tilt Effect on Mouse Move
+             * Creates a premium, physical feeling by rotating the phone based on cursor position
+             */
+            if (iphoneTilt) {
+                sachShowcase.addEventListener('mousemove', (e) => {
+                    // Get mouse position relative to the modal center
+                    const rect = sachShowcase.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // Calculate rotation angles (limited range for subtle effect)
+                    const rotateY = (x / rect.width) * 20; // Max 20deg left/right
+                    const rotateX = -(y / rect.height) * 20; // Max 20deg up/down
+                    
+                    // Apply smooth 3D rotation with GSAP
+                    gsap.to(iphoneTilt, {
+                        rotateY: rotateY,
+                        rotateX: rotateX,
+                        duration: 0.5,
+                        ease: 'power2.out',
+                        transformPerspective: 1000
+                    });
+                });
+                
+                // Reset rotation when mouse leaves
+                sachShowcase.addEventListener('mouseleave', () => {
+                    gsap.to(iphoneTilt, {
+                        rotateY: 0,
+                        rotateX: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    });
+                });
+            }
+            
+            /**
+             * Screen Switching Logic
+             * Allows users to cycle through different app screenshots
+             */
+            screenDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    // Update active state
+                    screenDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    
+                    // Fade out current image
+                    gsap.to(screenImage, {
+                        opacity: 0,
+                        duration: 0.2,
+                        onComplete: () => {
+                            // Change image source
+                            screenImage.src = sachScreens[index];
+                            
+                            // Fade in new image
+                            gsap.to(screenImage, {
+                                opacity: 1,
+                                duration: 0.3
+                            });
+                        }
+                    });
+                });
+            });
+            
+            // Close button event listener
+            if (closeSachBtn) {
+                closeSachBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeSachShowcase();
+                });
+            }
+            
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && sachShowcase && !sachShowcase.classList.contains('hidden')) {
+                    closeSachShowcase();
+                }
+            });
+            
+            console.log('✅ Sach.ai Mobile Showcase Ready');
+
+            // ========================================
+            // FINTRAK MOBILE SHOWCASE LOGIC
+            // ========================================
+            
+            const fintrakShowcase = document.getElementById('fintrak-showcase');
+            const closeFintrakBtn = document.getElementById('close-fintrak-btn');
+            const iphoneTiltFintrak = document.getElementById('iphone-tilt-fintrak');
+            const screenImageFintrak = document.getElementById('screen-image-fintrak');
+            const screenDotsFintrak = document.querySelectorAll('.screen-dot-fintrak');
+            
+            // Available screenshots for Fintrak
+            const fintrakScreens = [
+                './Fintrak/Screenshot 2026-01-03 184457.png',
+                './Fintrak/Screenshot 2026-01-03 184508.png',
+                './Fintrak/Screenshot 2026-01-03 184536.png',
+                './Fintrak/Screenshot 2026-01-03 184549.png'
+            ];
+            
+            /**
+             * Opens the Fintrak Mobile Showcase Modal with fade-in animation
+             */
+            function openFintrakShowcase() {
+                console.log('💰 Opening Fintrak Mobile Showcase');
+                
+                // Show the modal
+                fintrakShowcase.style.display = 'block';
+                fintrakShowcase.classList.remove('hidden');
+                fintrakShowcase.classList.remove('pointer-events-none');
+                
+                // Animate in with GSAP
+                const tl = gsap.timeline();
+                
+                tl.to(fintrakShowcase, {
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+                
+                tl.from(iphoneTiltFintrak, {
+                    scale: 0.5,
+                    opacity: 0,
+                    rotateY: -30,
+                    duration: 0.8,
+                    ease: 'back.out(1.2)'
+                }, '-=0.3');
+                
+                // Scale down home view
+                gsap.to(homeView, {
+                    scale: 0.95,
+                    opacity: 0.3,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            /**
+             * Closes the Fintrak showcase modal and resets animations
+             */
+            function closeFintrakShowcase() {
+                console.log('❌ Closing Fintrak Mobile Showcase');
+                
+                // Reset phone rotation before closing
+                gsap.to(iphoneTiltFintrak, {
+                    rotateY: 0,
+                    rotateX: 0,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+                
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        fintrakShowcase.style.display = 'none';
+                        fintrakShowcase.classList.add('hidden');
+                        fintrakShowcase.classList.add('pointer-events-none');
+                    }
+                });
+                
+                tl.to(fintrakShowcase, {
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: 'power2.in'
+                });
+                
+                // Restore home view
+                gsap.to(homeView, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'power4.inOut'
+                });
+            }
+            
+            /**
+             * GSAP 3D Tilt Effect on Mouse Move
+             * Creates a premium, physical feeling by rotating the phone based on cursor position
+             */
+            if (iphoneTiltFintrak) {
+                fintrakShowcase.addEventListener('mousemove', (e) => {
+                    // Get mouse position relative to the modal center
+                    const rect = fintrakShowcase.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // Calculate rotation angles (limited range for subtle effect)
+                    const rotateY = (x / rect.width) * 20; // Max 20deg left/right
+                    const rotateX = -(y / rect.height) * 20; // Max 20deg up/down
+                    
+                    // Apply smooth 3D rotation with GSAP
+                    gsap.to(iphoneTiltFintrak, {
+                        rotateY: rotateY,
+                        rotateX: rotateX,
+                        duration: 0.5,
+                        ease: 'power2.out',
+                        transformPerspective: 1000
+                    });
+                });
+                
+                // Reset rotation when mouse leaves
+                fintrakShowcase.addEventListener('mouseleave', () => {
+                    gsap.to(iphoneTiltFintrak, {
+                        rotateY: 0,
+                        rotateX: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    });
+                });
+            }
+            
+            /**
+             * Screen Switching Logic
+             * Allows users to cycle through different app screenshots
+             */
+            screenDotsFintrak.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    // Update active state
+                    screenDotsFintrak.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    
+                    // Fade out current image
+                    gsap.to(screenImageFintrak, {
+                        opacity: 0,
+                        duration: 0.2,
+                        onComplete: () => {
+                            // Change image source
+                            screenImageFintrak.src = fintrakScreens[index];
+                            
+                            // Fade in new image
+                            gsap.to(screenImageFintrak, {
+                                opacity: 1,
+                                duration: 0.3
+                            });
+                        }
+                    });
+                });
+            });
+            
+            // Close button event listener
+            if (closeFintrakBtn) {
+                closeFintrakBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeFintrakShowcase();
+                });
+            }
+            
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && fintrakShowcase && !fintrakShowcase.classList.contains('hidden')) {
+                    closeFintrakShowcase();
+                }
+            });
+            
+            console.log('✅ Fintrak Mobile Showcase Ready');
+            
+            console.log('✅ PolyQore Portfolio Loaded Successfully!');
+        });
+    </script>
+</body>
+</html>

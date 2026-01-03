@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyQore - Portfolio</title>
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper.js CDN CSS (CRITICAL for height) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- SplitType for Text Reveals -->
+    <script src="https://unpkg.com/split-type"></script>
+    
+    <style>
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #E0E0E0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Grid Lines */
+        .grid-line {
+            position: absolute;
+            width: 1px;
+            height: 100vh;
+            background: #222;
+            top: 0;
+            z-index: 5;
+        }
+        
+        .grid-line-1 { left: 25%; }
+        .grid-line-2 { left: 50%; }
+        .grid-line-3 { left: 75%; }
+        
+        /* Brand Text Responsive Sizing */
+        .brand-text {
+            font-size: clamp(4rem, 10vw, 12rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+        
+        /* Swiper Container - FORCE HEIGHT */
+        .swiper {
+            width: 100%;
+            height: 100% !important;
+        }
+        
+        .swiper-slide {
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .swiper-slide:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Swiper Navigation Buttons */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #E0E0E0;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 16px;
+        }
+        
+        /* Text Scramble Animation */
+        .scramble-text {
+            display: inline-block;
+        }
+        
+        /* Info View Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            height: 100vh;
+        }
+        
+        .info-col {
+            padding: 2rem 1.5rem;
+            border-right: 1px solid #222;
+            overflow-y: auto;
+        }
+        
+        .info-col:last-child {
+            border-right: none;
+        }
+        
+        /* Profile Images */
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            border-radius: 50%;
+        }
+        
+        /* Nav Links */
+        .nav-link {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Grid Lines (Spanning Full Viewport) -->
+    <div class="grid-line grid-line-1"></div>
+    <div class="grid-line grid-line-2"></div>
+    <div class="grid-line grid-line-3"></div>
+
+    <!-- HOME VIEW -->
+    <main id="home-view" class="h-full w-full flex flex-col relative z-10">
+        
+        <!-- TOP SECTION: 75vh -->
+        <div class="h-[75vh] w-full grid grid-cols-4 border-b border-[#222] relative">
+            
+            <!-- Column 1: Brand Name -->
+            <div class="col-span-2 flex items-center justify-center p-8 border-r border-[#222]">
+                <h1 class="brand-text text-[#E0E0E0]">POLYQORE</h1>
+            </div>
+            
+            <!-- Column 3: Navigation -->
+            <div class="flex flex-col justify-between p-8 border-r border-[#222]">
+                <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-4">Navigation</p>
+                    <nav class="space-y-3">
+                        <a href="#home" class="nav-link block text-sm">[ HOME ]</a>
+                        <a id="info-nav-link" class="nav-link block text-sm">[ INFO ]</a>
+                    </nav>
+                </div>
+                
+                <div class="mt-auto">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Founders</p>
+                    <p class="text-sm">Sameer Dhir &</p>
+                    <p class="text-sm">Shresth Senwal</p>
+                </div>
+            </div>
+            
+            <!-- Column 4: Location & Time -->
+            <div class="flex flex-col justify-between p-8">
+                <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Based In</p>
+                    <p class="text-sm">Mumbai, India</p>
+                </div>
+                
+                <div class="mt-auto">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Local Time</p>
+                    <p class="text-sm" id="current-time">--:--</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BOTTOM SECTION: 25vh Carousel -->
+        <div class="h-[25vh] w-full relative bg-[#050505] border-t border-[#222]">
+            <div class="swiper h-full w-full">
+                <div class="swiper-wrapper">
+                    <!-- Project 1: Flagr -->
+                    <div class="swiper-slide">
+                        <img src="./Flagr/flagr-screenshot.png" alt="Flagr - Legal Risk AI" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">FLAGR</h3>
+                            <p class="text-xs text-gray-400">Legal Risk AI</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2: Alert-Aid -->
+                    <div class="swiper-slide">
+                        <img src="./Alert-Aid/alert-aid-screenshot.png" alt="Alert-Aid - Disaster ML" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">ALERT-AID</h3>
+                            <p class="text-xs text-gray-400">Disaster ML</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3: Civic Pulse -->
+                    <div class="swiper-slide">
+                        <img src="./Civic%20Pulse/civic-pulse-screenshot.png" alt="Civic Pulse - Governance Platform" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">CIVIC PULSE</h3>
+                            <p class="text-xs text-gray-400">Governance Platform</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 4: N.E.W.S -->
+                    <div class="swiper-slide">
+                        <img src="./N.E.W.S/news-screenshot.png" alt="N.E.W.S - News Analysis" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">N.E.W.S</h3>
+                            <p class="text-xs text-gray-400">News Analysis</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5: ResQ -->
+                    <div class="swiper-slide">
+                        <img src="./ResQ/resq-screenshot.png" alt="ResQ - Emergency Response" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">RESQ</h3>
+                            <p class="text-xs text-gray-400">Emergency Response</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 6: StockLens -->
+                    <div class="swiper-slide">
+                        <img src="./StockLens/stocklens-screenshot.png" alt="StockLens - Financial Analytics" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
+                            <h3 class="text-sm font-bold">STOCKLENS</h3>
+                            <p class="text-xs text-gray-400">Financial Analytics</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- INFO VIEW OVERLAY -->
+    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
+        <div class="info-grid h-full">
+            
+            <!-- Column 1: Close & About -->
+            <div class="info-col">
+                <button id="close-info" class="nav-link text-sm mb-8">[ CLOSE ]</button>
+                
+                <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-4">About</p>
+                    <div id="bio-text" class="text-sm leading-relaxed text-gray-400">
+                        <p class="mb-4">PolyQore is a creative engineering duo specializing in AI/ML solutions, SaaS platforms, and FinTech innovation.</p>
+                        <p class="mb-4">We build products that merge cutting-edge technology with human-centered design, focusing on real-world impact.</p>
+                        <p>From disaster response systems to legal risk analysis, our portfolio spans multiple domains with one common thread: precision engineering.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 2: Founders -->
+            <div class="info-col">
+                <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">Founders</p>
+                
+                <div class="space-y-8">
+                    <!-- Sameer Dhir -->
+                    <div class="flex items-start gap-4">
+                        <img src="./profile/sameer.jpg" alt="Sameer Dhir" class="profile-img" />
+                        <div>
+                            <h3 class="text-sm font-bold mb-1">Sameer Dhir</h3>
+                            <p class="text-xs text-gray-400 mb-2">Full Stack & Deep Learning</p>
+                            <p class="text-xs text-gray-600">React • Python • Three.js</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Shresth Senwal -->
+                    <div class="flex items-start gap-4">
+                        <img src="./profile/shresth.jpg" alt="Shresth Senwal" class="profile-img" />
+                        <div>
+                            <h3 class="text-sm font-bold mb-1">Shresth Senwal</h3>
+                            <p class="text-xs text-gray-400 mb-2">Core Engineering & Systems</p>
+                            <p class="text-xs text-gray-600">C++ • Linux • Distributed Systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 3: Services -->
+            <div class="info-col">
+                <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">Services</p>
+                
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <h4 class="font-bold mb-2">AI/ML Engineering</h4>
+                        <p class="text-xs text-gray-400">Custom models, NLP, Computer Vision</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-2">SaaS Development</h4>
+                        <p class="text-xs text-gray-400">Full-stack platforms, APIs, DevOps</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-2">FinTech Solutions</h4>
+                        <p class="text-xs text-gray-400">Trading systems, Risk analytics</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-2">Creative Development</h4>
+                        <p class="text-xs text-gray-400">Three.js, WebGL, Interactive experiences</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 4: Contact -->
+            <div class="info-col">
+                <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">Contact</p>
+                
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Contact</p>
+                        <a href="tel:+919999885717" class="nav-link">+91 99998 85717</a>
+                    </div>
+                    
+                    <!-- GitHub contact removed from standalone info per design requirement -->
+                    
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Location</p>
+                        <p class="text-gray-400">Mumbai, India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Swiper.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Initialize Swiper with 4 slides visible
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 2,
+            loop: true,
+            grabCursor: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 2,
+                }
+            }
+        });
+        
+        // Real-time Clock
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Info View Toggle with GSAP
+        const infoView = document.getElementById('info-view');
+        const infoNavLink = document.getElementById('info-nav-link');
+        const closeInfoBtn = document.getElementById('close-info');
+        
+        function openInfoView() {
+            // Show the view immediately
+            infoView.style.display = 'block';
+            infoView.classList.remove('hidden');
+            infoView.classList.remove('pointer-events-none');
+            
+            // Initialize SplitType for bio text line-by-line reveal
+            const bioText = document.getElementById('bio-text');
+            const split = new SplitType(bioText, { types: 'lines' });
+            
+            // Wrap lines in overflow-hidden divs for slide-up effect
+            split.lines.forEach(line => {
+                const wrapper = document.createElement('div');
+                wrapper.style.overflow = 'hidden';
+                line.parentNode.insertBefore(wrapper, line);
+                wrapper.appendChild(line);
+                line.style.transform = 'translateY(100%)';
+            });
+            
+            // Create master timeline
+            const tl = gsap.timeline();
+            
+            // 1. Fade in background with autoAlpha
+            tl.to(infoView, {
+                autoAlpha: 1,
+                duration: 0.6,
+                ease: 'power2.out'
+            });
+            
+            // 2. Reveal bio text lines
+            tl.to(split.lines, {
+                y: 0,
+                stagger: 0.05,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, '-=0.3');
+            
+            // 3. Fade in profile images
+            tl.from('.profile-img', {
+                opacity: 0,
+                scale: 0.8,
+                stagger: 0.1,
+                duration: 0.5,
+                ease: 'back.out(1.7)'
+            }, '-=0.5');
+        }
+        
+        function closeInfoView() {
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    infoView.style.display = 'none';
+                    infoView.classList.add('hidden');
+                    infoView.classList.add('pointer-events-none');
+                }
+            });
+            
+            tl.to(infoView, {
+                autoAlpha: 0,
+                duration: 0.4,
+                ease: 'power2.in'
+            });
+        }
+        
+        // Event Listeners
+        infoNavLink.addEventListener('click', openInfoView);
+        closeInfoBtn.addEventListener('click', closeInfoView);
+        
+        // Text Scramble Effect for Brand Name (Optional Enhancement)
+        const brandText = document.querySelector('.brand-text');
+        const chars = '!<>-_\\/[]{}—=+*^?#________';
+        let interval = null;
+        
+        function scrambleText(element, finalText) {
+            let iteration = 0;
+            clearInterval(interval);
+            
+            interval = setInterval(() => {
+                element.innerText = finalText
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iteration) {
+                            return finalText[index];
+                        }
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join('');
+                
+                if (iteration >= finalText.length) {
+                    clearInterval(interval);
+                }
+                
+                iteration += 1 / 3;
+            }, 30);
+        }
+        
+        // Trigger scramble on page load
+        window.addEventListener('load', () => {
+            scrambleText(brandText, 'POLYQORE');
+        });
+    </script>
+</body>
+</html>
