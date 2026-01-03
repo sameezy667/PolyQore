@@ -34,7 +34,7 @@ export const PROJECTS: Project[] = [
   {
     id: '1',
     title: 'Flagr',
-    description: 'Flagr is a modern, intelligent document analysis and chat platform built with React and TypeScript. It combines the power of AI-driven document processing with an intuitive chat interface, enabling users to upload, analyze, and interact with their documents through natural language conversations. The platform leverages advanced language models to provide comprehensive document insights, making it easier for users to extract meaningful information from complex documents through an interactive chat experience. Whether you\'re dealing with legal contracts, technical documentation, or research papers, Flagr transforms dense text into understandable, actionable insights.',
+    description: 'Flagr is a modern AI-driven document analysis and chat platform built with React and TypeScript. By unifying intelligent document processing with a natural language conversational interface, Flagr allows users to seamlessly query documents and instantly flags suspicious or risky content within contracts.',
     category: 'AI/ML',
     tags: ['React', 'TypeScript', 'AI', 'NLP', 'Document Processing'],
     thumbnailUrl: '/screenshots/Screenshot 2026-01-03 013332.png',
