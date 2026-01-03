@@ -545,7 +545,7 @@ QORE</h1>
         <div class="w-full pb-24 px-4">
             
             <!-- Project Card: FLAGR -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[0])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="0">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">FLAGR</h2>
                     <span class="text-xs font-mono text-gray-500">AI / LEGAL</span>
@@ -556,7 +556,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: ALERT-AID -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[1])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="1">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">ALERT-AID</h2>
                     <span class="text-xs font-mono text-gray-500">DISASTER RESPONSE</span>
@@ -567,7 +567,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: SACH.AI -->
-            <div class="mb-16 cursor-pointer group" onclick="openSachShowcase()">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-special="sach">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">SACH.AI</h2>
                     <span class="text-xs font-mono text-gray-500">AI / FOOD ANALYSIS</span>
@@ -578,7 +578,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: RESQ -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[3])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="3">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">RESQ</h2>
                     <span class="text-xs font-mono text-gray-500">EMERGENCY RESPONSE</span>
@@ -589,7 +589,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: DJEDOPS -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[4])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="4">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">DJEDOPS</h2>
                     <span class="text-xs font-mono text-gray-500">FINTECH</span>
@@ -600,7 +600,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: FLOWKEY -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[5])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="5">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">FLOWKEY</h2>
                     <span class="text-xs font-mono text-gray-500">AI / IoT</span>
@@ -611,7 +611,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: FINTRAK -->
-            <div class="mb-16 cursor-pointer group" onclick="openFintrakShowcase()">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-special="fintrak">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">FINTRAK</h2>
                     <span class="text-xs font-mono text-gray-500">FINTECH</span>
@@ -622,7 +622,7 @@ QORE</h1>
             </div>
 
             <!-- Project Card: PRISM -->
-            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[7])">
+            <div class="mb-16 cursor-pointer group mobile-project-card" data-project-index="7">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">PRISM</h2>
                     <span class="text-xs font-mono text-gray-500">AI / ANALYSIS</span>
@@ -1974,7 +1974,28 @@ QORE</h1>
                 });
             }
             
+            // Mobile Project Card Click Handlers
+            const mobileProjectCards = document.querySelectorAll('.mobile-project-card');
+            mobileProjectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const projectIndex = card.getAttribute('data-project-index');
+                    const special = card.getAttribute('data-special');
+                    
+                    if (special === 'sach') {
+                        console.log('🎯 Sach.ai clicked from mobile');
+                        openSachShowcase();
+                    } else if (special === 'fintrak') {
+                        console.log('💰 Fintrak clicked from mobile');
+                        openFintrakShowcase();
+                    } else if (projectIndex !== null) {
+                        console.log('📱 Project clicked:', PROJECTS[parseInt(projectIndex)].title);
+                        openProject(PROJECTS[parseInt(projectIndex)]);
+                    }
+                });
+            });
+            
             console.log('✅ Mobile Navigation Ready');
+            console.log('✅ Mobile Project Cards Ready:', mobileProjectCards.length);
             
             console.log('✅ PolyQore Portfolio Loaded Successfully!');
         });
