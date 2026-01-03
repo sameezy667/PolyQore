@@ -545,79 +545,90 @@ QORE</h1>
         <div class="w-full pb-24 px-4">
             
             <!-- Project Card: FLAGR -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(0)">
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[0])">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">FLAGR</h2>
                     <span class="text-xs font-mono text-gray-500">AI / LEGAL</span>
                 </div>
                 <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./Flagr/flagr-screenshot.png" alt="Flagr" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <img src="./screenshots/Screenshot 2026-01-03 013332.png" alt="Flagr" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/flagr/600/800'" />
                 </div>
             </div>
 
             <!-- Project Card: ALERT-AID -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(1)">
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[1])">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">ALERT-AID</h2>
                     <span class="text-xs font-mono text-gray-500">DISASTER RESPONSE</span>
                 </div>
                 <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./Alert-Aid/alert-screenshot.png" alt="Alert-Aid" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <img src="./screenshots/Screenshot 2026-01-03 015733.png" alt="Alert-Aid" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/alert/600/800'" />
                 </div>
             </div>
 
-            <!-- Project Card: FINTRAK -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(2)">
+            <!-- Project Card: SACH.AI -->
+            <div class="mb-16 cursor-pointer group" onclick="openSachShowcase()">
                 <div class="flex justify-between items-end mb-3 px-2">
-                    <h2 class="text-4xl font-bold tracking-tighter text-white">FINTRAK</h2>
-                    <span class="text-xs font-mono text-gray-500">FINTECH</span>
+                    <h2 class="text-4xl font-bold tracking-tighter text-white">SACH.AI</h2>
+                    <span class="text-xs font-mono text-gray-500">AI / FOOD ANALYSIS</span>
                 </div>
                 <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./Fintrak/fintrak-screenshot.png" alt="Fintrak" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                </div>
-            </div>
-
-            <!-- Project Card: PRISM -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(3)">
-                <div class="flex justify-between items-end mb-3 px-2">
-                    <h2 class="text-4xl font-bold tracking-tighter text-white">PRISM</h2>
-                    <span class="text-xs font-mono text-gray-500">DEV TOOLS</span>
-                </div>
-                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./Prism/prism-screenshot.png" alt="Prism" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                </div>
-            </div>
-
-            <!-- Project Card: DJEDOPS -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(4)">
-                <div class="flex justify-between items-end mb-3 px-2">
-                    <h2 class="text-4xl font-bold tracking-tighter text-white">DJEDOPS</h2>
-                    <span class="text-xs font-mono text-gray-500">DEVOPS</span>
-                </div>
-                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./DJEDops/djedops-screenshot.png" alt="DJEDops" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                </div>
-            </div>
-
-            <!-- Project Card: FLOWKEY -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(5)">
-                <div class="flex justify-between items-end mb-3 px-2">
-                    <h2 class="text-4xl font-bold tracking-tighter text-white">FLOWKEY</h2>
-                    <span class="text-xs font-mono text-gray-500">API SECURITY</span>
-                </div>
-                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./Flowkey/flowkey-screenshot.png" alt="Flowkey" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <img src="./screenshots/Screenshot 2026-01-03 013757.png" alt="Sach.ai" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/sach/600/800'" />
                 </div>
             </div>
 
             <!-- Project Card: RESQ -->
-            <div class="mb-16 cursor-pointer group" onclick="openProjectView(6)">
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[3])">
                 <div class="flex justify-between items-end mb-3 px-2">
                     <h2 class="text-4xl font-bold tracking-tighter text-white">RESQ</h2>
                     <span class="text-xs font-mono text-gray-500">EMERGENCY RESPONSE</span>
                 </div>
                 <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
-                    <img src="./ResQ/resq-screenshot.png" alt="ResQ" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <img src="./screenshots/Screenshot 2026-01-03 014140.png" alt="ResQ" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/resq/600/800'" />
+                </div>
+            </div>
+
+            <!-- Project Card: DJEDOPS -->
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[4])">
+                <div class="flex justify-between items-end mb-3 px-2">
+                    <h2 class="text-4xl font-bold tracking-tighter text-white">DJEDOPS</h2>
+                    <span class="text-xs font-mono text-gray-500">FINTECH</span>
+                </div>
+                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
+                    <img src="./screenshots/Screenshot 2026-01-03 014950.png" alt="DJEDops" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/djed/600/800'" />
+                </div>
+            </div>
+
+            <!-- Project Card: FLOWKEY -->
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[5])">
+                <div class="flex justify-between items-end mb-3 px-2">
+                    <h2 class="text-4xl font-bold tracking-tighter text-white">FLOWKEY</h2>
+                    <span class="text-xs font-mono text-gray-500">AI / IoT</span>
+                </div>
+                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
+                    <img src="./screenshots/Screenshot 2026-01-03 020600.png" alt="Flowkey" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/flow/600/800'" />
+                </div>
+            </div>
+
+            <!-- Project Card: FINTRAK -->
+            <div class="mb-16 cursor-pointer group" onclick="openFintrakShowcase()">
+                <div class="flex justify-between items-end mb-3 px-2">
+                    <h2 class="text-4xl font-bold tracking-tighter text-white">FINTRAK</h2>
+                    <span class="text-xs font-mono text-gray-500">FINTECH</span>
+                </div>
+                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
+                    <img src="./screenshots/Screenshot 2026-01-03 190723.png" alt="Fintrak" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/fintrak/600/800'" />
+                </div>
+            </div>
+
+            <!-- Project Card: PRISM -->
+            <div class="mb-16 cursor-pointer group" onclick="openProject(PROJECTS[7])">
+                <div class="flex justify-between items-end mb-3 px-2">
+                    <h2 class="text-4xl font-bold tracking-tighter text-white">PRISM</h2>
+                    <span class="text-xs font-mono text-gray-500">AI / ANALYSIS</span>
+                </div>
+                <div class="w-full aspect-[4/5] bg-[#111] overflow-hidden border-y border-[#222]">
+                    <img src="./screenshots/Screenshot 2026-01-03 172944.png" alt="Prism" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://picsum.photos/seed/prism/600/800'" />
                 </div>
             </div>
 
