@@ -385,6 +385,9 @@
             infoView.style.display = 'block';
             infoView.classList.remove('hidden');
             infoView.classList.remove('pointer-events-none');
+            // Prevent background scrolling while Info view is open
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             
             // Initialize SplitType for bio text line-by-line reveal
             const bioText = document.getElementById('bio-text');
@@ -433,6 +436,9 @@
                     infoView.style.display = 'none';
                     infoView.classList.add('hidden');
                     infoView.classList.add('pointer-events-none');
+                    // Restore page scrolling after Info view closes
+                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
                 }
             });
             
