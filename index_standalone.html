@@ -261,7 +261,7 @@
     </main>
 
     <!-- INFO VIEW OVERLAY -->
-    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
+    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none overflow-hidden" style="z-index: 9999;">
         <div class="absolute inset-0 grid grid-cols-4 pointer-events-none">
             <div class="dashed-r h-full"></div>
             <div class="dashed-r h-full"></div>
@@ -388,6 +388,13 @@
             // Prevent background scrolling while Info view is open
             document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
+            // Prevent Info overlay itself from scrolling
+            infoView.style.position = 'fixed';
+            infoView.style.top = '0';
+            infoView.style.left = '0';
+            infoView.style.right = '0';
+            infoView.style.bottom = '0';
+            infoView.style.overflow = 'hidden';
             
             // Initialize SplitType for bio text line-by-line reveal
             const bioText = document.getElementById('bio-text');
@@ -439,6 +446,13 @@
                     // Restore page scrolling after Info view closes
                     document.body.style.overflow = '';
                     document.documentElement.style.overflow = '';
+                    // Restore info overlay defaults
+                    infoView.style.overflow = '';
+                    infoView.style.position = '';
+                    infoView.style.top = '';
+                    infoView.style.left = '';
+                    infoView.style.right = '';
+                    infoView.style.bottom = '';
                 }
             });
             
