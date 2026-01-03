@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
     title: 'ResQ',
     description: 'ResQ is a production-ready emergency response platform designed for real-time incident coordination. Built with React, TypeScript, Supabase, and Leaflet, it connects citizens, emergency responders, and resources in critical moments. The platform provides geospatial visualization, real-time updates, and coordination tools to streamline emergency response and save lives.',
     category: 'SaaS',
-    tags: ['React', 'TypeScript', 'Supabase', 'Leaflet', 'Real-time', 'Emergency'],
+    tags: ['React', 'TypeScript', 'Supabase', 'Leaflet', 'Real-time', 'Emergency Response'],
     thumbnailUrl: '/thumbnails/resq.svg',
     deploymentLink: 'https://res-q-f.vercel.app/',
     createdAt: '2025-12-15',
