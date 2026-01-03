@@ -12,7 +12,7 @@ export const useProjects = () => {
     const cats = new Set(PROJECTS.map(p => p.category));
     return ['All', ...Array.from(cats)];
   }, []);
-
+//sameer dhir
   const allTags = useMemo(() => {
     const tags = new Set<string>();
     PROJECTS.forEach(p => p.tags.forEach(t => tags.add(t)));

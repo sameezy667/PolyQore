@@ -16,7 +16,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
     navigate(`/project/${project.id}`);
     window.scrollTo(0, 0);
   };
-
+  //sameer dhir
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

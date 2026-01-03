@@ -3,7 +3,7 @@ import { TextScramble } from './TextScramble';
 
 interface LoaderProps {
   onComplete: () => void;
-}
+}             //sameer dhir
 
 export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
