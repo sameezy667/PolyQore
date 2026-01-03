@@ -1329,7 +1329,8 @@ QORE</h1>
             const projectView = document.getElementById('project-view');
             const closeBtn = document.getElementById('close-btn');
 
-            function openProject(p) {
+            // Make openProject globally accessible for mobile cards
+            window.openProject = function(p) {
                 // Populate Detail
                 document.getElementById('view-id').innerText = p.id;
                 document.getElementById('detail-title').innerText = p.title; 
@@ -1636,7 +1637,7 @@ QORE</h1>
             /**
              * Opens the Sach.ai Mobile Showcase Modal with fade-in animation
              */
-            function openSachShowcase() {
+            window.openSachShowcase = function() {
                 console.log('📱 Opening Sach.ai Mobile Showcase');
                 
                 // Show the modal
@@ -1801,7 +1802,7 @@ QORE</h1>
             /**
              * Opens the Fintrak Mobile Showcase Modal with fade-in animation
              */
-            function openFintrakShowcase() {
+            window.openFintrakShowcase = function() {
                 console.log('💰 Opening Fintrak Mobile Showcase');
                 
                 // Show the modal
