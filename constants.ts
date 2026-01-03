@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     description: 'Flagr is a modern, intelligent document analysis and chat platform built with React and TypeScript. It combines the power of AI-driven document processing with an intuitive chat interface, enabling users to upload, analyze, and interact with their documents through natural language conversations. The platform leverages advanced language models to provide comprehensive document insights, making it easier for users to extract meaningful information from complex documents through an interactive chat experience. Whether you\'re dealing with legal contracts, technical documentation, or research papers, Flagr transforms dense text into understandable, actionable insights.',
     category: 'AI/ML',
     tags: ['React', 'TypeScript', 'AI', 'NLP', 'Document Processing'],
-    thumbnailUrl: '/Flagr/Screenshot 2026-01-03 013332.png',
+    thumbnailUrl: '/thumbnails/flagr.svg',
     deploymentLink: 'https://flagr.vercel.app/',
     createdAt: '2025-01-01',
     functioning: [
@@ -52,7 +52,7 @@ export const PROJECTS: Project[] = [
     description: 'An intelligent food analyzer that uses AI to provide personalized dietary insights. Built for the EnCode 2026 Hackathon with a focus on AI-native experience, real-time streaming, and generative UI. Sach.ai empowers users to make informed dietary choices by analyzing food items, ingredients, and nutritional content through advanced AI models.',
     category: 'AI/ML',
     tags: ['AI', 'Health Tech', 'Real-time', 'Generative UI', 'Nutrition'],
-    thumbnailUrl: '/Sach.ai/Screenshot 2026-01-03 013757.png',
+    thumbnailUrl: '/thumbnails/sach-ai.svg',
     deploymentLink: 'https://truth-pulse-seven.vercel.app/',
     createdAt: '2026-01-02',
     functioning: [
@@ -67,7 +67,7 @@ export const PROJECTS: Project[] = [
     description: 'ResQ is a production-ready emergency response platform designed for real-time incident coordination. Built with React, TypeScript, Supabase, and Leaflet, it connects citizens, emergency responders, and resources in critical moments. The platform provides geospatial visualization, real-time updates, and coordination tools to streamline emergency response and save lives.',
     category: 'SaaS',
     tags: ['React', 'TypeScript', 'Supabase', 'Leaflet', 'Real-time', 'Emergency'],
-    thumbnailUrl: '/ResQ/Screenshot 2026-01-03 014140.png',
+    thumbnailUrl: '/thumbnails/resq.svg',
     deploymentLink: 'https://res-q-f.vercel.app/',
     createdAt: '2025-12-15',
     functioning: [
@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     description: 'DjedOPS is a mission-critical monitoring platform providing operators and traders with real-time visibility into the Djed algorithmic stablecoin protocol on the Ergo blockchain. Built with a "Financial Brutalism" design philosophy, it combines live blockchain data, 3D visualizations, and automated risk management tools. The platform ensures transparency, stability monitoring, and operational insights for the Djed ecosystem.',
     category: 'FinTech',
     tags: ['Blockchain', 'Ergo', 'Real-time', 'Crypto', '3D Visualization', 'Risk Management'],
-    thumbnailUrl: '/DJEDops/Screenshot 2026-01-03 014950.png',
+    thumbnailUrl: '/thumbnails/djedops.svg',
     deploymentLink: 'https://djed-ops.vercel.app/',
     createdAt: '2025-11-20',
     functioning: [
@@ -97,7 +97,7 @@ export const PROJECTS: Project[] = [
     description: 'Alert Aid is a production-ready disaster prediction and alert system built with React, TypeScript, and advanced ML capabilities. Features an interactive 3D globe, real-time weather monitoring, and intelligent risk assessment. The platform provides early warnings for natural disasters, helping communities prepare and respond effectively to emergencies.',
     category: 'AI/ML',
     tags: ['Machine Learning', 'React', 'TypeScript', 'Disaster Prediction', '3D', 'Weather'],
-    thumbnailUrl: '/Alert-Aid/Screenshot 2026-01-03 015733.png',
+    thumbnailUrl: '/thumbnails/alert-aid.svg',
     deploymentLink: 'https://alert-aid.vercel.app/',
     createdAt: '2025-10-10',
     functioning: [
@@ -112,7 +112,7 @@ export const PROJECTS: Project[] = [
     description: 'A modern, accessible frontend application built with React, TypeScript, and Tailwind CSS. Features real-time AI-powered continuous chat functionality through Google Gemini API integration with persistent conversation history and streaming responses. FlowKey provides a seamless, intuitive chat experience with state-of-the-art AI capabilities.',
     category: 'AI/ML',
     tags: ['React', 'TypeScript', 'Tailwind', 'Google Gemini', 'AI Chat', 'Accessibility'],
-    thumbnailUrl: '/Flowkey/Screenshot 2026-01-03 020600.png',
+    thumbnailUrl: '/thumbnails/flowkey.svg',
     deploymentLink: 'https://flow-key-iota.vercel.app/',
     createdAt: '2026-01-03',
     functioning: [
