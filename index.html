@@ -463,24 +463,24 @@
         <div class="h-full"></div>
     </div>
 
-    <!-- HOME VIEW DASHBOARD -->
-    <div id="home-view" class="relative z-10 w-full h-full flex flex-col">
+    <!-- DESKTOP VIEW (Hidden on Mobile) -->
+    <div id="home-view" class="hidden md:flex relative z-10 w-full h-full flex-col">
         
-        <!-- Top Section: 75vh with 4-Column Grid (mobile: auto height) -->
-        <div class="grid grid-cols-1 md:grid-cols-4 h-auto md:h-[75vh] min-h-[60vh] relative pointer-events-none">
+        <!-- Top Section: 75vh with 4-Column Grid -->
+        <div class="grid grid-cols-4 h-[75vh] min-h-[60vh] relative pointer-events-none">
             
             <!-- COL 1 & 2: MASSIVE POLYQORE BRAND -->
-            <div class="col-span-1 md:col-span-2 p-6 md:p-8 pt-12 flex flex-col justify-center">
-                <h1 id="main-hero-title" class="brand-text font-black uppercase tracking-tighter mix-blend-difference select-none whitespace-pre-line pointer-events-auto transition-colors duration-300 text-[12vh] md:text-[18vh] leading-[0.9]">POLY
+            <div class="col-span-2 p-8 pt-12 flex flex-col justify-center">
+                <h1 id="main-hero-title" class="brand-text font-black uppercase tracking-tighter mix-blend-difference select-none whitespace-pre-line pointer-events-auto transition-colors duration-300 text-[18vh] leading-[0.9]">POLY
 QORE</h1>
                 
-                <div class="mt-8 md:mt-12 text-xs font-mono text-gray-500 uppercase tracking-widest pl-2 border-l border-gray-800">
+                <div class="mt-12 text-xs font-mono text-gray-500 uppercase tracking-widest pl-2 border-l border-gray-800">
                     Est. 2025<br>System Active
                 </div>
             </div>
 
             <!-- COL 3: ROLE / METADATA -->
-            <div class="hidden md:flex col-span-1 flex-col p-8 pt-14 pointer-events-auto">
+            <div class="flex col-span-1 flex-col p-8 pt-14 pointer-events-auto">
                 <div class="mb-12">
                     <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-2">Founders</h3>
                     <p class="text-xl font-bold uppercase leading-tight">Sameer Dhir<br>Shresth Senwal</p>
@@ -496,7 +496,7 @@ QORE</h1>
             </div>
 
             <!-- COL 4: NAV & LOCATION (Aligned to bottom) -->
-            <div class="col-span-1 flex flex-col justify-between p-6 md:p-8 pt-14 items-end text-right pointer-events-auto">
+            <div class="col-span-1 flex flex-col justify-between p-8 pt-14 items-end text-right pointer-events-auto">
                 <nav class="flex flex-col gap-2 text-sm font-bold uppercase tracking-widest">
                     <a href="#" class="hover:text-white text-gray-500 transition-colors group flex items-center justify-end gap-2">
                         Work <span class="opacity-0 group-hover:opacity-100 transition-opacity">/</span>
@@ -512,16 +512,16 @@ QORE</h1>
                 <!-- Location & Time (Bottom Aligned) -->
                 <div>
                     <h3 class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-1">Location</h3>
-                    <p class="text-lg md:text-xl font-bold uppercase">New Delhi, IN</p>
+                    <p class="text-xl font-bold uppercase">New Delhi, IN</p>
                     <p id="clock" class="text-xs text-gray-600 font-mono mt-1">00:00:00</p>
                 </div>
             </div>
         </div>
 
-        <!-- BOTTOM CAROUSEL: 25vh Fixed Height (mobile: 30vh) -->
-        <div class="h-[30vh] md:h-[25vh] w-full border-t border-line bg-bg relative z-20">
+        <!-- BOTTOM CAROUSEL: 25vh Fixed Height -->
+        <div class="h-[25vh] w-full border-t border-line bg-bg relative z-20">
             <!-- Swiper Container -->
-            <div class="swiper h-[30vh] md:h-[25vh] w-full">
+            <div class="swiper h-[25vh] w-full">
                 <div class="swiper-wrapper" id="carousel-wrapper">
                     <!-- Slides injected via JS -->
                 </div>
@@ -533,8 +533,112 @@ QORE</h1>
         </div>
     </div>
 
+    <!-- MOBILE VIEW (Block on Mobile, Hidden on Desktop) -->
+    <div id="mobile-home-view" class="block md:hidden relative z-10 w-full min-h-screen bg-bg overflow-y-auto">
+        
+        <!-- Sticky Header -->
+        <header class="sticky top-0 left-0 w-full z-50 bg-bg/95 backdrop-blur-sm border-b border-line px-6 py-4">
+            <h1 class="text-2xl font-black uppercase tracking-tighter">POLYQORE</h1>
+        </header>
+
+        <!-- Mobile Project Feed (Vertical Scroll) -->
+        <div class="w-full pb-24">
+            
+            <!-- Project Card: FLAGR -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="flagr">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">FLAGR</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">AI / LEGAL</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./Flagr/flagr-screenshot.png" alt="Flagr" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: ALERT-AID -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="alert-aid">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">ALERT-AID</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">DISASTER RESPONSE</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./Alert-Aid/alert-screenshot.png" alt="Alert-Aid" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: FINTRAK -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="fintrak">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">FINTRAK</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">FINTECH</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./Fintrak/fintrak-screenshot.png" alt="Fintrak" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: PRISM -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="prism">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">PRISM</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">DEV TOOLS</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./Prism/prism-screenshot.png" alt="Prism" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: DJEDOPS -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="djedops">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">DJEDOPS</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">DEVOPS</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./DJEDops/djedops-screenshot.png" alt="DJEDops" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: FLOWKEY -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="flowkey">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">FLOWKEY</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">API SECURITY</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./Flowkey/flowkey-screenshot.png" alt="Flowkey" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Project Card: RESQ -->
+            <div class="mobile-project-card border-b border-line p-6 cursor-pointer" data-project="resq">
+                <div class="mb-4">
+                    <h2 class="text-4xl font-black uppercase tracking-tight mb-2">RESQ</h2>
+                    <p class="text-sm text-gray-500 uppercase tracking-wider">EMERGENCY RESPONSE</p>
+                </div>
+                <div class="w-full aspect-[4/5] bg-gray-900 rounded overflow-hidden">
+                    <img src="./ResQ/resq-screenshot.png" alt="ResQ" class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fixed Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 w-full bg-black border-t border-[#333] z-50 flex items-center justify-around py-4">
+            <button class="mobile-nav-btn text-sm font-bold uppercase tracking-widest text-gray-400 transition-colors" data-active="true">
+                WORK
+            </button>
+            <button id="mobile-info-btn" class="mobile-nav-btn text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">
+                INFO
+            </button>
+            <button id="mobile-archive-btn" class="mobile-nav-btn text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">
+                ARCHIVE
+            </button>
+        </nav>
+    </div>
+
     <!-- INFO VIEW OVERLAY -->
-    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
+    <section id="info-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none overflow-y-auto" style="z-index: 9999;">
         <!-- Background Grid -->
         <div class="absolute inset-0 z-0 grid grid-cols-4 pointer-events-none h-full w-full">
             <div class="dashed-r h-full"></div>
@@ -613,7 +717,7 @@ QORE</h1>
     </section>
 
     <!-- ARCHIVE VIEW -->
-    <section id="archive-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none" style="z-index: 9999;">
+    <section id="archive-view" class="fixed inset-0 bg-[#050505] text-[#E0E0E0] hidden opacity-0 pointer-events-none overflow-y-auto" style="z-index: 9999;">
         <!-- Close Button (Top Right) -->
         <button id="close-archive-btn" class="absolute top-8 right-8 z-50 group flex items-center gap-3 text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors pointer-events-auto">
             <span>Close</span>
@@ -1837,6 +1941,29 @@ QORE</h1>
             });
             
             console.log('✅ Fintrak Mobile Showcase Ready');
+            
+            // ========================================
+            // MOBILE NAVIGATION HANDLERS
+            // ========================================
+            
+            const mobileInfoBtn = document.getElementById('mobile-info-btn');
+            const mobileArchiveBtn = document.getElementById('mobile-archive-btn');
+            
+            if (mobileInfoBtn) {
+                mobileInfoBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openInfoView();
+                });
+            }
+            
+            if (mobileArchiveBtn) {
+                mobileArchiveBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openArchiveView();
+                });
+            }
+            
+            console.log('✅ Mobile Navigation Ready');
             
             console.log('✅ PolyQore Portfolio Loaded Successfully!');
         });
